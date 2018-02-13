@@ -39,6 +39,10 @@ small {
   color: #999;
 }
 
+.list-group-item-action {
+  color: #333;
+}
+
 
 
 </style>

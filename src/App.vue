@@ -2,12 +2,18 @@
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
     <router-view/>
+    <Footer/>
   </div>
 </template>
 
 <script>
+import Footer from '@/components/Footer'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    Footer
+  }
 }
 </script>
 
@@ -39,6 +45,12 @@ a
 {
   text-decoration: none;
   color: inherit;
+  color: #333;
+}
+
+a:hover
+{
+  color: #333;
 }
 
 #footer

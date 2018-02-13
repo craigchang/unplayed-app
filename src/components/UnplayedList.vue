@@ -1,10 +1,10 @@
 <template>
-  <div class="list">
+  <div class="col-lg-3">
     <h1>{{listTitle}}</h1>
     <p>{{listDescription}}</p>
-    <ul>
+    <ul class="list-group">
       <!-- <UnplayedListItem v-for="(item, key) in unplayedList" :item="item" :key="item.id"></UnplayedListItem> -->
-      <UnplayedListItem v-for="(item, key) in unplayedList" :item="item" :key="key"></UnplayedListItem>
+      <UnplayedListItem class="list-group-item list-group-item-action flex-column align-items-start" v-for="(item, key) in unplayedList" :item="item" :key="key"></UnplayedListItem>
     </ul>
   </div>
 </template>
@@ -94,5 +94,21 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+h1
+{
+  margin: 0 0 16px;
+  padding: 1rem 0 1rem 1.25rem;
+  padding-left: 1.25rem;
+  border-bottom: 4px solid #333;
+}
+
+p
+{
+  padding-left: 1.25rem;
+  margin: 0 0 16px;
+}
+
+
 
 </style>

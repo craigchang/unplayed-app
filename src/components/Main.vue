@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="row">
     <UnplayedList list-title="Unplayed" :file-name="unplayedFile"/>
     <UnplayedList list-title="Unbeaten" :file-name="unbeatenFile"/>
     <UnplayedList list-title="Beaten" :file-name="beatenFile"/>

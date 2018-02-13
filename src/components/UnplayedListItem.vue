@@ -1,13 +1,17 @@
 <template>
   <li v-if="item.link !== ''">
-    <a :href="item.link">{{item.gameTitle}}</a>
-    <span>{{item.consoleName}}</span>
-    <span>{{item.comment}}</span>
+    <div class="d-flex justify-content-between align-items-center">
+      <a :href="item.link">{{item.gameTitle}}</a>
+      <span class="badge badge-primary badge-pill">{{item.consoleName}}</span>
+    </div>
+    <small v-if="item.comment">{{item.comment}}</small>
   </li>
   <li v-else>
-    {{item.gameTitle}}
-    <span>{{item.consoleName}}</span>
-    <span>{{item.comment}}</span>
+    <div class="d-flex w-100 justify-content-between align-items-center">
+      {{item.gameTitle}}
+      <span class="badge badge-primary badge-pill">{{item.consoleName}}</span>
+    </div>
+    <small v-if="item.comment">{{item.comment}}</small>
   </li>
 </template>
 
@@ -25,5 +29,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+/* bootstrap css */ 
+.badge {
+  font-size: 70%;
+}
+
+small {
+  color: #999;
+}
+
+
 
 </style>

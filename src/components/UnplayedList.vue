@@ -68,7 +68,7 @@ export default {
         if (element.getElementsByTagName('a').length > 0)
           gameTitle = element.getElementsByTagName('a')[0].innerText;
         else
-          gameTitle = element.innerText;
+          gameTitle = element.childNodes[0].textContent.trim(); // For now assume game title is always the first line
 
         let consoleName = '';
         if (element.getElementsByTagName('span').length > 0)

@@ -1,6 +1,6 @@
 <template>
   <div class="col-lg-3">
-    <h1>{{listTitle}}</h1>
+    <h1 @click="sortList">{{listTitle}} <span class="list-sort oi" :class="[sortClass]"></span></h1>
     <p>{{listDescription}}</p>
     <ul class="list-group">
       <!-- <UnplayedListItem v-for="(item, key) in unplayedList" :item="item" :key="item.id"></UnplayedListItem> -->
@@ -25,7 +25,31 @@ export default {
   data () {
     return {
       listDescription: '',
-      unplayedList: []
+      unplayedList: [],
+      sortClass: ''
+    }
+  },
+  methods: {
+    sortList: function() {
+      if (this.sortClass === '' || this.sortClass === 'oi-sort-descending') {
+        this.sortClass = 'oi-sort-ascending';
+        this.unplayedList.sort((a, b) => {
+          if (a.gameTitle < b.gameTitle)
+            return -1;
+          else if (a.gameTitle > b.gameTitle)
+            return 1;
+          return 0;
+        });
+      } else {
+        this.sortClass = 'oi-sort-descending';
+        this.unplayedList.sort((a, b) => {
+          if (a.gameTitle < b.gameTitle)
+            return 1;
+          else if (a.gameTitle > b.gameTitle)
+            return -1;
+          return 0;
+        });
+      }
     }
   },
   created () {
@@ -46,7 +70,7 @@ export default {
             this.unplayedList = UnplayedListParser.parseListUl(parsedHtmlArray[i]);
           }
         }
-
+        console.log(this.unplayedList);
       }).catch(e => {
         console.log(e);
       })
@@ -63,12 +87,18 @@ h1
   padding: 1rem 0 1rem 1.25rem;
   padding-left: 1.25rem;
   border-bottom: 4px solid #333;
+  font-size: 2rem;
+  cursor: pointer;
 }
 
 p
 {
   padding-left: 1.25rem;
   margin: 0 0 16px;
+}
+
+span.list-sort {
+  font-size: 1.5rem;
 }
 
 </style>

@@ -4,7 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+import 'bootstrap';
+
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'open-iconic/font/css/open-iconic-bootstrap.css'
 import './assets/styles.css'
 
 Vue.config.productionTip = false

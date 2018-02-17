@@ -59,6 +59,7 @@
     "jquery": "^3.3.1",
     "nightwatch": "^0.9.12",
     "node-notifier": "^5.1.2",
+    "open-iconic": "^1.1.1",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.2.0",
     "portfinder": "^1.0.13",

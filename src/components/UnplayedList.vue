@@ -70,7 +70,6 @@ export default {
             this.unplayedList = UnplayedListParser.parseListUl(parsedHtmlArray[i]);
           }
         }
-        console.log(this.unplayedList);
       }).catch(e => {
         console.log(e);
       })

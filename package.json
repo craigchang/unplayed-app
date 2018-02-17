@@ -5,7 +5,7 @@
   "author": "Craig Chang <craigchang@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --watch --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.0.0",
+    "open-iconic": "^1.1.1",
     "popper.js": "^1.12.9",
     "showdown": "^1.8.6",
     "vue": "^2.5.2",

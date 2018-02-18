@@ -1,7 +1,21 @@
 <template>
   <div class="col-lg-3">
-    <h1 @click="sortList">{{listTitle}} <span class="list-sort oi" :class="[sortClass]"></span></h1>
+    <h1>{{listTitle}}</h1>
     <p>{{listDescription}}</p>
+    <div class="sort-by-container">
+      <span>Sort by: </span>
+      <div class="sort-by-criteria-container">
+        <span>
+          <a class="sort-by-name-btn" href="#name" @click.prevent="sortByName">Name<span class="list-sort oi" :class="'oi-sort-' + [sortByNameClass]" :title="sortByNameClass"></span>
+          </a>
+        </span>
+        <span>
+          <a class="sort-by-console-btn" href="#console" @click.prevent="sortByConsole">Console<span class="list-sort oi" :class="'oi-sort-' + [sortByConsoleClass]" :title="sortByConsoleClass"></span>
+          </a>
+        </span>
+      </div>
+      
+    </div>
     <ul class="list-group">
       <!-- <UnplayedListItem v-for="(item, key) in unplayedList" :item="item" :key="item.id"></UnplayedListItem> -->
       <UnplayedListItem class="list-group-item list-group-item-action flex-column align-items-start" v-for="(item, key) in unplayedList" :item="item" :item-key="key"></UnplayedListItem>
@@ -15,40 +29,41 @@ import showdown from 'showdown'
 import $ from 'jquery'
 import UnplayedListItem from '@/components/UnplayedListItem'
 import UnplayedListParser from '@/helpers/unplayed-list-parser'
+import Utility from '@/helpers/utility'
 
 export default {
   name: 'UnplayedList',
   components: {
     UnplayedListItem
   },
-  props: ['listTitle', 'fileName'],
+  props: ['listTitle', 'fileName', 'consoleSet'],
   data () {
     return {
       listDescription: '',
       unplayedList: [],
-      sortClass: ''
+      sortByConsoleClass: '',
+      sortByNameClass: ''
     }
   },
   methods: {
-    sortList: function() {
-      if (this.sortClass === '' || this.sortClass === 'oi-sort-descending') {
-        this.sortClass = 'oi-sort-ascending';
-        this.unplayedList.sort((a, b) => {
-          if (a.gameTitle < b.gameTitle)
-            return -1;
-          else if (a.gameTitle > b.gameTitle)
-            return 1;
-          return 0;
-        });
+    sortByConsole: function() {
+      this.sortByNameClass = ''; // reset name
+      if (this.sortByConsoleClass === '' || this.sortByConsoleClass === 'descending') {
+        this.sortByConsoleClass = 'ascending';
+        Utility.sortAscByCategory('consoleName', this.unplayedList);
       } else {
-        this.sortClass = 'oi-sort-descending';
-        this.unplayedList.sort((a, b) => {
-          if (a.gameTitle < b.gameTitle)
-            return 1;
-          else if (a.gameTitle > b.gameTitle)
-            return -1;
-          return 0;
-        });
+        this.sortByConsoleClass = 'descending';
+        Utility.sortDescByCategory('consoleName', this.unplayedList);
+      }
+    },
+    sortByName: function(event) {
+      this.sortByConsoleClass = ''; // reset name
+      if (this.sortByNameClass === '' || this.sortByNameClass === 'descending') {
+        this.sortByNameClass = 'ascending';
+        Utility.sortAscByCategory('gameTitle', this.unplayedList);
+      } else {
+        this.sortByNameClass = 'descending';
+        Utility.sortDescByCategory('gameTitle', this.unplayedList);
       }
     }
   },
@@ -70,6 +85,11 @@ export default {
             this.unplayedList = UnplayedListParser.parseListUl(parsedHtmlArray[i]);
           }
         }
+
+        for(let obj of this.unplayedList) {
+          this.consoleSet.add(obj.consoleName);
+        }
+
       }).catch(e => {
         console.log(e);
       })
@@ -87,7 +107,6 @@ h1
   padding-left: 1.25rem;
   border-bottom: 4px solid #333;
   font-size: 2rem;
-  cursor: pointer;
 }
 
 p
@@ -98,6 +117,25 @@ p
 
 span.list-sort {
   font-size: 1.5rem;
+}
+
+div.sort-by-container {
+  padding: 0 1.25rem;
+  margin-bottom: 0;
+  margin: 0 0 10px;
+  border-bottom: 1px solid #333;
+}
+
+div.sort-by-criteria-container {
+  float: right;
+}
+
+div.sort-by-criteria-container > span {
+  margin-left: 0.5rem;
+}
+
+div.sort-by-criteria-container span.oi {
+  font-size: 0.7rem;
 }
 
 </style>

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import showdown from 'showdown'
 import $ from 'jquery'
 

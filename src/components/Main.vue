@@ -1,9 +1,9 @@
 <template>
   <div class="row">
-    <UnplayedList list-title="Unplayed" :file-name="unplayedFile"/>
-    <UnplayedList list-title="Unbeaten" :file-name="unbeatenFile"/>
-    <UnplayedList list-title="Beaten" :file-name="beatenFile"/>
-    <UnplayedList list-title="Abandoned" :file-name="abandonedFile"/>
+    <UnplayedList list-title="Unplayed" :file-name="unplayedFile" :console-set="unplayedConsoleSet"/>
+    <UnplayedList list-title="Unbeaten" :file-name="unbeatenFile" :console-set="unplayedConsoleSet"/>
+    <UnplayedList list-title="Beaten" :file-name="beatenFile" :console-set="unplayedConsoleSet"/>
+    <UnplayedList list-title="Abandoned" :file-name="abandonedFile" :console-set="unplayedConsoleSet"/>
   </div>
 </template>
 
@@ -23,6 +23,7 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
+      unplayedConsoleSet: new Set(),
       unplayedFile: unplayed_md,
       unbeatenFile: unbeaten_md,
       beatenFile: beaten_md,
@@ -30,6 +31,9 @@ export default {
     }
   },
   created () {
+  },
+  mounted () {
+    console.log(this.unplayedConsoleSet);
   }
 }
 </script>

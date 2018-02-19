@@ -2,6 +2,9 @@
   <div class="col-lg-3">
     <h1>{{listTitle}}</h1>
     <p>{{listDescription}}</p>
+    <div class="form-group">
+      <input type="text" aria-describedby="searchByName" placeholder="Search by name" class="form-control" @input="searchByName($event.target.value)" style="padding: .375rem 1.25rem; font-size: 0.8125rem;">
+    </div>
     <div class="sort-by-container">
       <span>Sort by: </span>
       <div class="sort-by-criteria-container">
@@ -41,12 +44,14 @@ export default {
     return {
       listDescription: '',
       unplayedList: [],
+      unplayedListOriginal: '',
       sortByConsoleClass: '',
-      sortByNameClass: ''
+      sortByNameClass: '',
+      searchByNameInput: ''
     }
   },
   methods: {
-    sortByConsole: function() {
+    sortByConsole: function(event) {
       this.sortByNameClass = ''; // reset name
       if (this.sortByConsoleClass === '' || this.sortByConsoleClass === 'descending') {
         this.sortByConsoleClass = 'ascending';
@@ -57,7 +62,7 @@ export default {
       }
     },
     sortByName: function(event) {
-      this.sortByConsoleClass = ''; // reset name
+      this.sortByConsoleClass = ''; // reset console
       if (this.sortByNameClass === '' || this.sortByNameClass === 'descending') {
         this.sortByNameClass = 'ascending';
         Utility.sortAscByCategory('gameTitle', this.unplayedList);
@@ -65,6 +70,28 @@ export default {
         this.sortByNameClass = 'descending';
         Utility.sortDescByCategory('gameTitle', this.unplayedList);
       }
+    },
+    searchByName: function(inputValue) {
+      let temp = this.unplayedListOriginal;
+
+      // first sort the original
+      if (this.sortByNameClass == 'ascending')
+        Utility.sortAscByCategory('gameTitle', temp);
+      else if (this.sortByNameClass == 'descending')
+        Utility.sortDescByCategory('gameTitle', temp);
+      
+      if (this.sortByConsoleClass == 'ascending')
+        Utility.sortAscByCategory('consoleName', temp);
+      else if (this.sortByConsoleClass == 'descending')
+        Utility.sortDescByCategory('consoleName', temp);
+
+      // then search
+      let newUnplayedList = temp.filter(function(obj) {
+        return obj.gameTitle.toUpperCase().indexOf(inputValue.toUpperCase()) != -1;
+      });
+
+      // update list in UI
+      this.unplayedList = newUnplayedList;
     }
   },
   created () {
@@ -83,6 +110,7 @@ export default {
           }
           if (parsedHtmlArray[i].tagName === 'UL') {
             this.unplayedList = UnplayedListParser.parseListUl(parsedHtmlArray[i]);
+            this.unplayedListOriginal = this.unplayedList;
           }
         }
 

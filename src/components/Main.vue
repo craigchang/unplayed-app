@@ -33,7 +33,6 @@ export default {
   created () {
   },
   mounted () {
-    console.log(this.unplayedConsoleSet);
   }
 }
 </script>

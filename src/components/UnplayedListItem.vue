@@ -7,7 +7,7 @@
     <small v-if="item.comment">{{item.comment}}</small>
   </li>
   <li v-else>
-    <div class="d-flex w-100 justify-content-between align-items-center">
+    <div class="d-flex justify-content-between align-items-center">
       {{item.gameTitle}}
       <span class="badge badge-primary badge-pill">{{item.consoleName}}</span>
     </div>

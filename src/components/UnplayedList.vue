@@ -3,7 +3,7 @@
     <h1>{{listTitle}}</h1>
     <p>{{listDescription}}</p>
     <div class="form-group">
-      <input type="text" aria-describedby="searchByName" placeholder="Search by name" class="form-control" @input="searchByName($event.target.value)" style="padding: .375rem 1.25rem; font-size: 0.8125rem;">
+      <input type="text" aria-describedby="searchByName" placeholder="Search by name" class="form-control" v-model="searchByNameInput" style="padding: .375rem 1.25rem; font-size: 0.8125rem;">
     </div>
     <div class="sort-by-container">
       <span>Sort by: </span>
@@ -21,7 +21,7 @@
     </div>
     <ul class="list-group">
       <!-- <UnplayedListItem v-for="(item, key) in unplayedList" :item="item" :key="item.id"></UnplayedListItem> -->
-      <UnplayedListItem class="list-group-item list-group-item-action flex-column align-items-start" v-for="(item, key) in unplayedList" :item="item" :item-key="key"></UnplayedListItem>
+      <UnplayedListItem class="list-group-item list-group-item-action flex-column align-items-start" v-for="(item, key) in filteredUnplayedList" :item="item" :item-key="key"></UnplayedListItem>
     </ul>
   </div>
 </template>
@@ -70,28 +70,13 @@ export default {
         this.sortByNameClass = 'descending';
         Utility.sortDescByCategory('gameTitle', this.unplayedList);
       }
-    },
-    searchByName: function(inputValue) {
-      let temp = this.unplayedListOriginal;
-
-      // first sort the original
-      if (this.sortByNameClass == 'ascending')
-        Utility.sortAscByCategory('gameTitle', temp);
-      else if (this.sortByNameClass == 'descending')
-        Utility.sortDescByCategory('gameTitle', temp);
-      
-      if (this.sortByConsoleClass == 'ascending')
-        Utility.sortAscByCategory('consoleName', temp);
-      else if (this.sortByConsoleClass == 'descending')
-        Utility.sortDescByCategory('consoleName', temp);
-
-      // then search
-      let newUnplayedList = temp.filter(function(obj) {
-        return obj.gameTitle.toUpperCase().indexOf(inputValue.toUpperCase()) != -1;
+    }
+  },
+  computed: {
+    filteredUnplayedList: function() {
+      return this.unplayedList.filter((obj) => {
+        return obj.gameTitle.toUpperCase().indexOf(this.searchByNameInput.toUpperCase()) !== -1;
       });
-
-      // update list in UI
-      this.unplayedList = newUnplayedList;
     }
   },
   created () {

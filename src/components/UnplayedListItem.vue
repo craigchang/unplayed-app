@@ -1,14 +1,7 @@
 <template>
-  <li v-if="item.link !== ''">
+  <li>
     <div class="d-flex justify-content-between align-items-center">
-      <a :href="item.link">{{item.gameTitle}}</a>
-      <span class="badge badge-primary badge-pill">{{item.consoleName}}</span>
-    </div>
-    <small v-if="item.comment">{{item.comment}}</small>
-  </li>
-  <li v-else>
-    <div class="d-flex justify-content-between align-items-center">
-      {{item.gameTitle}}
+      <a :href="item.link ? '#' : item.link">{{item.gameTitle}}</a>
       <span class="badge badge-primary badge-pill">{{item.consoleName}}</span>
     </div>
     <small v-if="item.comment">{{item.comment}}</small>

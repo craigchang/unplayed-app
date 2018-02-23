@@ -39,7 +39,7 @@ export default {
   components: {
     UnplayedListItem
   },
-  props: ['listTitle', 'fileName', 'consoleSet'],
+  props: ['listTitle', 'fileName', 'consoleList'],
   data () {
     return {
       listDescription: '',
@@ -70,6 +70,13 @@ export default {
         this.sortByNameClass = 'descending';
         Utility.sortDescByCategory('gameTitle', this.unplayedList);
       }
+    },
+    search: function(nameKey, myArray) {
+      for (var i=0; i < myArray.length; i++) {
+        if (myArray[i].name === nameKey) {
+          return myArray[i];
+        }
+      }
     }
   },
   computed: {
@@ -99,9 +106,25 @@ export default {
           }
         }
 
+        // for(let obj of this.unplayedList) {
+        //   if (!this.consoleList.includes(obj.consoleName))
+        //     this.consoleList.push({console: obj.consoleName, count: 1});
+        //   else
+        //     this.consoleList['console'] .push({console: obj.consoleName, count: 1});
+        // }
+
+        // console.log('unplayed console list before loop', this.listTitle, this.consoleList);
+
         for(let obj of this.unplayedList) {
-          this.consoleSet.add(obj.consoleName);
+          if (!this.consoleList[obj.consoleName])
+            this.consoleList[obj.consoleName] = 1;
+          else
+            this.consoleList[obj.consoleName]++;
         }
+
+        // console.log('unplayed console list after loop', this.listTitle, this.consoleList);
+
+        this.$emit('refreshConsoleListComponent', this.listTitle)
 
       }).catch(e => {
         console.log(e);

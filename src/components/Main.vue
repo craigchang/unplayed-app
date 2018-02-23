@@ -1,9 +1,33 @@
 <template>
-  <div class="row">
-    <UnplayedList list-title="Unplayed" :file-name="unplayedFile" :console-set="unplayedConsoleSet"/>
-    <UnplayedList list-title="Unbeaten" :file-name="unbeatenFile" :console-set="unplayedConsoleSet"/>
-    <UnplayedList list-title="Beaten" :file-name="beatenFile" :console-set="unplayedConsoleSet"/>
-    <UnplayedList list-title="Abandoned" :file-name="abandonedFile" :console-set="unplayedConsoleSet"/>
+  <div>
+    <div class="jumbotron">
+      <button v-for="(count, console) in unplayedConsoleList" :console="console" :count="count" type="button" class="btn btn-primary">{{console}}
+        <span class="badge badge-light">{{count}}</span>
+        <span class="sr-only">unread messages</span>
+      </button>
+    </div>
+    <div class="row">
+      <UnplayedList 
+        list-title="Unplayed"
+        :file-name="unplayedFile"
+        :console-list="unplayedConsoleList"
+        @refreshConsoleListComponent="refreshConsoleListComponent"/>
+      <UnplayedList 
+        list-title="Unbeaten" 
+        :file-name="unbeatenFile" 
+        :console-list="unplayedConsoleList"
+        @refreshConsoleListComponent="refreshConsoleListComponent"/>
+      <UnplayedList 
+        list-title="Beaten" 
+        :file-name="beatenFile" 
+        :console-list="unplayedConsoleList"
+        @refreshConsoleListComponent="refreshConsoleListComponent"/>
+      <UnplayedList 
+        list-title="Abandoned"
+        :file-name="abandonedFile"
+        :console-list="unplayedConsoleList"
+        @refreshConsoleListComponent="refreshConsoleListComponent"/>
+    </div>
   </div>
 </template>
 
@@ -23,11 +47,17 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      unplayedConsoleSet: new Set(),
+      unplayedConsoleList: new Object(),
       unplayedFile: unplayed_md,
       unbeatenFile: unbeaten_md,
       beatenFile: beaten_md,
       abandonedFile: abandoned_md
+    }
+  },
+  methods: {
+    refreshConsoleListComponent: function(value) {
+      console.log('list done rendering', value)
+      this.$forceUpdate();
     }
   },
   created () {
@@ -39,5 +69,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.jumbotron {
+  padding: 1rem;
+  margin-bottom: 0;
+}
+.jumbotron button {
+  margin-right: 1rem;
+  margin-bottom: 0.5rem;
+}
 </style>

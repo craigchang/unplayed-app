@@ -33,3 +33,83 @@ a:hover
   clear: both;
   width: auto;
 }
+
+.btn-elegent. .badge-elegent {
+  background-color: #2e2e2e!important;
+  color: #fff!important;
+}
+
+.btn-unique, .badge-unique {
+  background-color: #880e4f!important;
+  color: #fff!important;
+}
+
+.btn-pink, .badge-pink {
+  background-color: #ec407a!important;
+  color: #fff!important;
+}
+
+.btn-purple, .badge-purple {
+    background-color: #8e24aa!important;
+    color: #fff!important;
+}
+
+.btn-deep-purple, .badge-deep-purple {
+    background-color: #512da8!important;
+    color: #fff!important;
+}
+
+.btn-indigo, .badge-indigo {
+    background-color: #3f51b5!important;
+    color: #fff!important;
+}
+
+.btn-light-blue, .badge-light-blue {
+    background-color: #82b1ff!important;
+    color: #fff!important;
+}
+
+.btn-cyan, .badge-cyan {
+    background-color: #00bcd4!important;
+    color: #fff!important;
+}
+
+.btn-dark-green, .badge-dark-green {
+    background-color: #388e3c!important;
+    color: #fff!important;
+}
+
+.btn-light-green, .badge-light-green {
+    background-color: #8bc34a!important;
+    color: #fff!important;
+}
+
+.btn-yellow, .badge-yellow {
+    background-color: #fbc02d!important;
+    color: #fff!important;
+}
+
+.btn-amber, .badge-amber {
+    background-color: #ffa000!important;
+    color: #fff!important;
+}
+
+.btn-deep-orange, .badge-deep-orange {
+    background-color: #ff7043!important;
+    color: #fff!important;
+}
+
+.btn-brown, .badge-brown {
+    background-color: #795548!important;
+    color: #fff!important;
+}
+
+.btn-blue-grey, .badge-blue-grey {
+    background-color: #78909c!important;
+    color: #fff!important;
+}
+
+.btn-mdb-color, .badge-mdb-color {
+    background-color: #59698d!important;
+    color: #fff!important;
+}

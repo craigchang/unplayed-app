@@ -4,6 +4,7 @@ import showdown from 'showdown'
 import $ from 'jquery'
 
 export default {
+  BUTTONSTYLESLIST: ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark'],
   convertMarkdownToHtmlDom: (text) => {
     let html = (new showdown.Converter()).makeHtml(text);
     html = html.replace(/\(/g, '<span>').replace(/\)/g, '</span>');
@@ -12,6 +13,7 @@ export default {
   parseListUl: (listUl) => {
     let gamesLiElements = Array.from(listUl.getElementsByTagName('li'));
     let listObj = [];
+    let buttonStylesList = Array.from(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark']);
 
     gamesLiElements.forEach((element) => {        
       let link = '';

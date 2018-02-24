@@ -39,12 +39,11 @@ export default {
   components: {
     UnplayedListItem
   },
-  props: ['listTitle', 'fileName', 'consoleList'],
+  props: ['listTitle', 'fileName', 'consoleList', 'colorList'],
   data () {
     return {
       listDescription: '',
       unplayedList: [],
-      unplayedListOriginal: '',
       sortByConsoleClass: '',
       sortByNameClass: '',
       searchByNameInput: ''
@@ -102,7 +101,6 @@ export default {
           }
           if (parsedHtmlArray[i].tagName === 'UL') {
             this.unplayedList = UnplayedListParser.parseListUl(parsedHtmlArray[i]);
-            this.unplayedListOriginal = this.unplayedList;
           }
         }
 
@@ -115,12 +113,31 @@ export default {
 
         // console.log('unplayed console list before loop', this.listTitle, this.consoleList);
 
+        //let colorList = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark', ];
+        // this.colorList = ['elegent', 'unique', 'pink', 'purple', 'deep-purple', 'indigo', 'light-blue', 'cyan', 'dark-green', 'light-green', 'yellow', 'amber', 'deep-orange', 'brown', 'blue-grey', 'mdb-color'];
+        let randomIndex = 0;
+        let color = '';
+        let j = 0;
+
         for(let obj of this.unplayedList) {
-          if (!this.consoleList[obj.consoleName])
-            this.consoleList[obj.consoleName] = 1;
-          else
-            this.consoleList[obj.consoleName]++;
+          if (!this.consoleList[obj.consoleName]) {
+            randomIndex = Math.floor(Math.random() * this.colorList.length);
+            color = this.colorList[randomIndex];
+            this.consoleList[obj.consoleName] = { 
+              'count': 1, 
+              'style': color
+            };
+            this.colorList.splice(randomIndex, 1);
+            this.unplayedList[j].style = color;
+          } else {
+            this.consoleList[obj.consoleName].count++;
+            this.unplayedList[j].style = this.consoleList[obj.consoleName].style;
+          }
+
+          j++;
         }
+
+        console.log(this.unplayedList);
 
         // console.log('unplayed console list after loop', this.listTitle, this.consoleList);
 

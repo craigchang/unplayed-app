@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="jumbotron">
-      <button v-for="(count, console) in unplayedConsoleList" :console="console" :count="count" type="button" class="btn btn-primary">{{console}}
-        <span class="badge badge-light">{{count}}</span>
+      <button v-for="(obj, console) in unplayedConsoleList" :console="console" type="button" :class="'btn btn-' + obj.style">{{console}}
+        <span class="badge badge-light">{{obj.count}}</span>
         <span class="sr-only">unread messages</span>
       </button>
     </div>
@@ -11,21 +11,25 @@
         list-title="Unplayed"
         :file-name="unplayedFile"
         :console-list="unplayedConsoleList"
+        :color-list="colorList"
         @refreshConsoleListComponent="refreshConsoleListComponent"/>
       <UnplayedList 
         list-title="Unbeaten" 
         :file-name="unbeatenFile" 
         :console-list="unplayedConsoleList"
+        :color-list="colorList"
         @refreshConsoleListComponent="refreshConsoleListComponent"/>
       <UnplayedList 
         list-title="Beaten" 
         :file-name="beatenFile" 
         :console-list="unplayedConsoleList"
+        :color-list="colorList"
         @refreshConsoleListComponent="refreshConsoleListComponent"/>
       <UnplayedList 
         list-title="Abandoned"
         :file-name="abandonedFile"
         :console-list="unplayedConsoleList"
+        :color-list="colorList"
         @refreshConsoleListComponent="refreshConsoleListComponent"/>
     </div>
   </div>
@@ -47,6 +51,8 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
+      colorList: ['elegent', 'unique', 'pink', 'purple', 'deep-purple', 'indigo', 'light-blue', 'cyan', 'dark-green', 'light-green', 'yellow', 'amber', 'deep-orange', 'brown', 'blue-grey', 'mdb-color'],
+      buttonStylesList: new Object(),
       unplayedConsoleList: new Object(),
       unplayedFile: unplayed_md,
       unbeatenFile: unbeaten_md,

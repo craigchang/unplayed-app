@@ -3,7 +3,7 @@
     <h1>{{listTitle}}</h1>
     <p>{{listDescription}}</p>
     <div class="form-group">
-      <input type="text" aria-describedby="searchByName" placeholder="Search by name" class="form-control" v-model="searchByNameInput" style="padding: .375rem 1.25rem; font-size: 0.8125rem;">
+      <input type="text" aria-describedby="searchByName" placeholder="Search by Name" class="form-control" v-model="searchByNameInput" style="padding: .375rem 1.25rem; font-size: 0.8125rem;">
     </div>
     <div class="sort-by-container">
       <span>Sort by: </span>
@@ -17,10 +17,8 @@
           </a>
         </span>
       </div>
-      
     </div>
     <ul class="list-group">
-      <!-- <UnplayedListItem v-for="(item, key) in unplayedList" :item="item" :key="item.id"></UnplayedListItem> -->
       <UnplayedListItem class="list-group-item list-group-item-action flex-column align-items-start" v-for="(item, key) in filteredUnplayedList" :item="item" :item-key="key"></UnplayedListItem>
     </ul>
   </div>
@@ -31,7 +29,6 @@
 import showdown from 'showdown'
 import $ from 'jquery'
 import UnplayedListItem from '@/components/UnplayedListItem'
-import UnplayedListParser from '@/helpers/unplayed-list-parser'
 import Utility from '@/helpers/utility'
 
 export default {
@@ -50,6 +47,62 @@ export default {
     }
   },
   methods: {
+    convertMarkdownToHtmlDom: function(text) {
+      let html = (new showdown.Converter()).makeHtml(text);
+      html = html.replace(/\(/g, '<span>').replace(/\)/g, '</span>');
+      return $.parseHTML(html);
+    },
+    parseListUl: function(listUl) {
+      let gamesLiElements = Array.from(listUl.getElementsByTagName('li'));
+      let listObj = [];
+      let randomIndex = 0;
+      let colorStyle = '';
+
+      gamesLiElements.forEach((element) => {
+        // get link
+        let link = '';
+        if (element.getElementsByTagName('a').length > 0)
+          link = element.getElementsByTagName('a')[0].getAttribute('href');
+
+        // get game title
+        let gameTitle = '';
+        if (element.getElementsByTagName('a').length > 0)
+          gameTitle = element.getElementsByTagName('a')[0].innerText;
+        else
+          gameTitle = element.childNodes[0].textContent.trim(); // For now assume game title is always the first line
+
+        // get console name
+        let consoleName = '';
+        if (element.getElementsByTagName('span').length > 0)
+          consoleName = element.getElementsByTagName('span')[0].innerText;
+
+        // get comment (if any)
+        let comment = '';
+        if (element.getElementsByTagName('span').length > 1)
+          comment = element.getElementsByTagName('span')[1].innerText;
+
+        // apply unique color for each console
+        if (!this.consoleList[consoleName]) {
+          randomIndex = Math.floor(Math.random() * this.colorList.length);
+          colorStyle = this.colorList[randomIndex];
+          this.consoleList[consoleName] = { 'count': 1, 'colorStyle': colorStyle };
+          this.colorList.splice(randomIndex, 1);
+        } else {
+          this.consoleList[consoleName].count++;
+          colorStyle = this.consoleList[consoleName].colorStyle;
+        }
+
+        listObj.push({
+          link,
+          gameTitle,
+          consoleName,
+          comment,
+          colorStyle
+        });
+      });
+
+      return listObj;
+    },
     sortByConsole: function(event) {
       this.sortByNameClass = ''; // reset name
       if (this.sortByConsoleClass === '' || this.sortByConsoleClass === 'descending') {
@@ -94,60 +147,23 @@ export default {
         return response.text();
       })
       .then(text => {
-        let parsedHtmlArray = UnplayedListParser.convertMarkdownToHtmlDom(text);
+        let parsedHtmlArray = this.convertMarkdownToHtmlDom(text);
         for(var i = 0; i < parsedHtmlArray.length; i++) {
           if (parsedHtmlArray[i].tagName === 'P') {
             this.listDescription = parsedHtmlArray[i].outerText;
           }
           if (parsedHtmlArray[i].tagName === 'UL') {
-            this.unplayedList = UnplayedListParser.parseListUl(parsedHtmlArray[i]);
+            this.unplayedList = this.parseListUl(parsedHtmlArray[i]);
           }
         }
-
-        // for(let obj of this.unplayedList) {
-        //   if (!this.consoleList.includes(obj.consoleName))
-        //     this.consoleList.push({console: obj.consoleName, count: 1});
-        //   else
-        //     this.consoleList['console'] .push({console: obj.consoleName, count: 1});
-        // }
-
-        // console.log('unplayed console list before loop', this.listTitle, this.consoleList);
-
-        //let colorList = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark', ];
-        // this.colorList = ['elegent', 'unique', 'pink', 'purple', 'deep-purple', 'indigo', 'light-blue', 'cyan', 'dark-green', 'light-green', 'yellow', 'amber', 'deep-orange', 'brown', 'blue-grey', 'mdb-color'];
-        let randomIndex = 0;
-        let color = '';
-        let j = 0;
-
-        for(let obj of this.unplayedList) {
-          if (!this.consoleList[obj.consoleName]) {
-            randomIndex = Math.floor(Math.random() * this.colorList.length);
-            color = this.colorList[randomIndex];
-            this.consoleList[obj.consoleName] = { 
-              'count': 1, 
-              'style': color
-            };
-            this.colorList.splice(randomIndex, 1);
-            this.unplayedList[j].style = color;
-          } else {
-            this.consoleList[obj.consoleName].count++;
-            this.unplayedList[j].style = this.consoleList[obj.consoleName].style;
-          }
-
-          j++;
-        }
-
-        console.log(this.unplayedList);
-
-        // console.log('unplayed console list after loop', this.listTitle, this.consoleList);
 
         this.$emit('refreshConsoleListComponent', this.listTitle)
-
       }).catch(e => {
         console.log(e);
       })
   }
 }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

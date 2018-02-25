@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="jumbotron">
-      <button v-for="(obj, console) in unplayedConsoleList" :console="console" type="button" :class="'btn btn-' + obj.style">{{console}}
+      <button v-for="(obj, console) in unplayedConsoleList" :console="console" type="button" :class="'btn btn-' + obj.colorStyle">{{console}}
         <span class="badge badge-light">{{obj.count}}</span>
         <span class="sr-only">unread messages</span>
       </button>

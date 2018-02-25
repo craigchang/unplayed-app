@@ -1,7 +1,7 @@
 <template>
   <li>
     <div class="d-flex justify-content-between align-items-center">
-      <a :href="item.link ? '#' : item.link">{{item.gameTitle}}</a>
+      <a :href="item.link !== '' ? item.link : '#'">{{item.gameTitle}}</a>
       <span class="badge badge-pill" :class="'badge-' + item.style">{{item.consoleName}}</span>
     </div>
     <small v-if="item.comment">{{item.comment}}</small>

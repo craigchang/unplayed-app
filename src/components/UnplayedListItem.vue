@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <li :class="{highlight: isHighlight}">
     <div class="d-flex justify-content-between align-items-center">
       <a :href="item.link !== '' ? item.link : '#'">{{item.gameTitle}}</a>
       <span class="badge badge-pill" :class="'badge-' + item.colorStyle">{{item.consoleName}}</span>
@@ -13,7 +13,9 @@
 export default {
   name: 'UnplayedListItem',
   data () {
-    return {}
+    return {
+      isHighlight: false
+    }
   },
   created () {
   },
@@ -38,5 +40,8 @@ small {
 }
 
 
+li.highlight {
+  background-color: #cccccc;
+}
 
 </style>

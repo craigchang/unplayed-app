@@ -43,7 +43,8 @@ export default {
       unplayedList: [],
       sortByConsoleClass: '',
       sortByNameClass: '',
-      searchByNameInput: ''
+      searchByNameInput: '',
+      filterByConsoleArray: ''
     }
   },
   methods: {
@@ -133,9 +134,18 @@ export default {
   },
   computed: {
     filteredUnplayedList: function() {
-      return this.unplayedList.filter((obj) => {
+      let filteredResults = this.unplayedList;
+      if (this.filterByConsoleArray.length > 0) {
+        filteredResults = this.unplayedList.filter((obj) => {
+          return this.filterByConsoleArray.includes(obj.consoleName);
+        });
+      }
+      
+      filteredResults = filteredResults.filter((obj) => {
         return obj.gameTitle.toUpperCase().indexOf(this.searchByNameInput.toUpperCase()) !== -1;
       });
+
+      return filteredResults;
     }
   },
   created () {
@@ -161,6 +171,13 @@ export default {
       }).catch(e => {
         console.log(e);
       })
+
+    this.$parent.$on('filterByConsole', (event, consoleName) => {
+      this.filterByConsoleArray = consoleName;
+    });
+    this.$parent.$on('showAll', () => {
+      this.filterByConsoleArray = '';
+    });
   }
 }
 

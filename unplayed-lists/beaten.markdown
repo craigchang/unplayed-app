@@ -7,7 +7,7 @@ Finished the game, but not necessarily 100%
 - [Firewatch](http://www.metacritic.com/game/playstation-4/firewatch) (PS4)
 - [Gone Home](http://www.metacritic.com/game/pc/gone-home) (PS4) (Console edition.)
 - [Journey](http://www.metacritic.com/game/playstation-4/journey) (PS4) (PS4 edition.)
-- [Kingdom Hearts 1.5 + 2.5 Final Mix](http://www.metacritic.com/game/playstation-4/kingdom-hearts-hd-i5-+-ii5-remix) (PS4) (Kingdom Hearts 1.5, Kingdom Hearts Re: Chain of Memories)
+- [Kingdom Hearts 1.5 + 2.5 Final Mix](http://www.metacritic.com/game/playstation-4/kingdom-hearts-hd-i5-+-ii5-remix) (PS4) (Kingdom Hearts 1.5, Kingdom Hearts Re: Chain of Memories, Kingdom Hearts 2.5)
 - [Kingdom Hearts Re:Chain of Memories](http://www.metacritic.com/game/playstation-4/kingdom-hearts-hd-i5-+-ii5-remix) (PS4)
 - [Life is Strange](http://www.metacritic.com/game/playstation-4/life-is-strange) (PS4)
 - [Metroid Fusion](http://www.metacritic.com/game/game-boy-advance/metroid-fusion) (WiiU) (Virtual Console.)

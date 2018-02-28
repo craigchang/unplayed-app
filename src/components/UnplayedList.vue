@@ -19,7 +19,12 @@
       </div>
     </div>
     <ul class="list-group">
-      <UnplayedListItem class="list-group-item list-group-item-action flex-column align-items-start" v-for="(item, key) in filteredUnplayedList" :item="item" :item-key="key"></UnplayedListItem>
+      <UnplayedListItem
+        class="list-group-item list-group-item-action flex-column align-items-start"
+        v-for="(item, key) in filteredUnplayedList"
+        :key="key"
+        :item="item"
+        :item-key="key"/>
     </ul>
   </div>
 </template>
@@ -172,10 +177,10 @@ export default {
         console.log(e);
       })
 
-    this.$parent.$on('filterByConsole', (event, consoleName) => {
-      this.filterByConsoleArray = consoleName;
+    this.$parent.$on('Main:filterByConsole', (event, filteredConsoleArray) => {
+      this.filterByConsoleArray = filteredConsoleArray;
     });
-    this.$parent.$on('showAll', () => {
+    this.$parent.$on('Main:showAll', () => {
       this.filterByConsoleArray = '';
     });
   }

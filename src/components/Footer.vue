@@ -1,7 +1,6 @@
 <template>
   <div id="footer">
-    <a href="http://craigchang.me/">Craig</a> began maintaining these lists around 2016.
-    <a href="http://shauninman.com/archive/2011/04/18/unplayed">Huh?</a>
+    <a class="homepage-url" href="http://craigchang.me/">Craig</a> began maintaining these lists around 2016. <a class="post-url" href="http://shauninman.com/archive/2011/04/18/unplayed">Huh?</a>
   </div>
 </template>
 

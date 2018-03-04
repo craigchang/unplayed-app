@@ -18,7 +18,6 @@ export default {
   name: 'FilterButton',
   data () { 
     return {
-      msg: 'null',
       isSelected: false
     }
   },
@@ -44,13 +43,16 @@ export default {
     }
   },
   created () {
-    this.$parent.$on('Main:removeFilterByConsole', (consoleName) => {
-      if(this.consoleName === consoleName)
+    //console.log(this);
+    if (this.$parent) {
+      this.$parent.$on('Main:removeFilterByConsole', (consoleName) => {
+        if(this.consoleName === consoleName)
+          this.isSelected = false;
+      });
+      this.$parent.$on('Main:showAll', () => {
         this.isSelected = false;
-    });
-    this.$parent.$on('Main:showAll', () => {
-      this.isSelected = false;
-    });
+      });
+    }
   }
 }
 

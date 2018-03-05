@@ -1,6 +1,7 @@
 const path = require('path')
 
 module.exports = {
+  verbose: true,
   rootDir: path.resolve(__dirname, '../../'),
   moduleFileExtensions: [
     'js',

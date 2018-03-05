@@ -43,7 +43,6 @@ export default {
     }
   },
   created () {
-    //console.log(this);
     if (this.$parent) {
       this.$parent.$on('Main:removeFilterByConsole', (consoleName) => {
         if(this.consoleName === consoleName)

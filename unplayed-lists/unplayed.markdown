@@ -9,3 +9,4 @@ A shortlist for potential future play.
 - [Shadow of the Colossus](http://www.metacritic.com/game/playstation-4/shadow-of-the-colossus) (PS4)
 - [The Last Guardian](http://www.metacritic.com/game/playstation-4/the-last-guardian) (PS4)
 - [The Legend of Zelda, Twilight Princess HD](http://www.metacritic.com/game/wii-u/the-legend-of-zelda-twilight-princess-hd) (WiiU)
+- [What Remains of Edith Finch](http://www.metacritic.com/game/playstation-4/what-remains-of-edith-finch) (PS4)

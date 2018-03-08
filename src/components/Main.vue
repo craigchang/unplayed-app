@@ -4,8 +4,9 @@
       <div style="margin: 0 auto; max-width: 1200px;">
         <button @click="showAll" class="btn btn-primary">Show All</button>
         <FilterButton
-          v-for="(obj, console) in unplayedConsoleList"
+          v-for="(obj, console, index) in unplayedConsoleList"
           :key="console"
+          :index="index"
           :color-style="obj.colorStyle"
           :count="obj.count"
           :console-name="console"
@@ -71,7 +72,6 @@ export default {
   data () {
     return {
       colorList: ['unique', 'pink', 'purple', 'deep-purple', 'indigo', 'light-blue', 'cyan', 'dark-green', 'light-green', 'yellow', 'amber', 'deep-orange', 'brown', 'blue-grey', 'mdb-color'],
-      buttonStylesList: new Object(),
       unplayedConsoleList: new Object(),
       unplayedFilteredList: [],
       unplayedFilteredConsoleArray: [],
@@ -97,7 +97,8 @@ export default {
     refreshConsoleListComponent: function(value) {
       this.$forceUpdate();
     },
-    filterButtonClick: function(event, consoleName, isSelected) {
+    filterButtonClick: function(event, consoleName, index, isSelected) {
+      console.log(event, consoleName, isSelected)
       if (isSelected) {
         this.addFilterByConsoleButton(consoleName);
       } else {
@@ -116,7 +117,7 @@ export default {
     }
   },
   created () {
-
+    console.log(this.unplayedConsoleList);
   },
   mounted () {
   }

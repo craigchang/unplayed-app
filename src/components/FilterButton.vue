@@ -3,7 +3,7 @@
   <button
     type="button"
     :class="classes"
-    @click.stop="clickEvent($event, consoleName, index)">
+    @click.stop="clickEvent($event, consoleName, colorStyle, index)">
     {{consoleName}}
     <span class="badge badge-light">{{count}}</span>
     <span class="sr-only">count</span>
@@ -20,12 +20,11 @@ export default {
       isSelected: false
     }
   },
-  props: ['consoleName', 'count', 'colorStyle', 'index'],
+  props: ['consoleName', 'count', 'colorStyle', 'index', 'isSelected'],
   methods: {
-    clickEvent: function(event, consoleName, index) {
-      console.log(index);
+    clickEvent: function(event, consoleName, colorStyle, index) {
       this.isSelected = !this.isSelected;
-      this.$emit('filterButtonClick', event, consoleName, index, this.isSelected);
+      this.$emit('filterButtonClick', event, consoleName, colorStyle, index, this.isSelected);
     }
   },
   computed: {

@@ -10,6 +10,19 @@
           :color-style="obj.colorStyle"
           :count="obj.count"
           :console-name="console"
+          :is-selected="obj.isSelected"
+          @filterButtonClick="filterButtonClick"
+        />
+      </div>
+      <div style="margin: 0 auto; max-width: 1200px;">
+        <button @click="showAll" class="btn btn-primary">Show All</button>
+        <FilterButton
+          v-for="(obj, index) in unplayedConsoleList2"
+          :key="index"
+          :index="index"
+          :color-style="obj.colorStyle"
+          :count="obj.count"
+          :console-name="obj.consoleName"
           @filterButtonClick="filterButtonClick"
         />
       </div>
@@ -17,12 +30,12 @@
     <div class="jumbotron" style="background-color: white;margin: 0 auto; max-width: 1200px;">
       <button
         v-for="(obj) in unplayedFilteredList"
-        :key="obj.console"
+        :key="obj.consoleName"
         type="button"
         :class="' btn btn-' + obj.colorStyle"
-        @click.stop="removeFilterByConsole($event, obj.console)">
+        @click.stop="removeFilterByConsole($event, obj.consoleName)">
           <span aria-hidden="true">&times;</span>
-          {{obj.console}}
+          {{obj.consoleName}}
       </button>
     </div>
     <div class="row">
@@ -30,24 +43,28 @@
         list-title="Unplayed"
         :file-name="unplayedFile"
         :console-list="unplayedConsoleList"
+        :console-list-two="unplayedConsoleList2"
         :color-list="colorList"
         @refreshConsoleListComponent="refreshConsoleListComponent"/>
       <UnplayedList
         list-title="Unbeaten"
         :file-name="unbeatenFile"
         :console-list="unplayedConsoleList"
+        :console-list-two="unplayedConsoleList2"
         :color-list="colorList"
         @refreshConsoleListComponent="refreshConsoleListComponent"/>
       <UnplayedList
         list-title="Beaten"
         :file-name="beatenFile"
         :console-list="unplayedConsoleList"
+        :console-list-two="unplayedConsoleList2"
         :color-list="colorList"
         @refreshConsoleListComponent="refreshConsoleListComponent"/>
       <UnplayedList
         list-title="Abandoned"
         :file-name="abandonedFile"
         :console-list="unplayedConsoleList"
+        :console-list-two="unplayedConsoleList2"
         :color-list="colorList"
         @refreshConsoleListComponent="refreshConsoleListComponent"/>
     </div>
@@ -73,6 +90,7 @@ export default {
     return {
       colorList: ['unique', 'pink', 'purple', 'deep-purple', 'indigo', 'light-blue', 'cyan', 'dark-green', 'light-green', 'yellow', 'amber', 'deep-orange', 'brown', 'blue-grey', 'mdb-color'],
       unplayedConsoleList: new Object(),
+      unplayedConsoleList2: [],
       unplayedFilteredList: [],
       unplayedFilteredConsoleArray: [],
       unplayedFile: unplayed_md,
@@ -82,27 +100,26 @@ export default {
     }
   },
   methods: {
-    addFilterByConsoleButton: function(consoleName) {
+    addFilterByConsoleButton: function(consoleName, colorStyle) {
       this.unplayedFilteredList.push({
-        console: consoleName,
-        colorStyle: this.unplayedConsoleList[consoleName].colorStyle
+        consoleName,
+        colorStyle
       })
       this.unplayedFilteredConsoleArray.push(consoleName);
     },
-    removeFilterByConsoleButton: function (consoleName) {
-      var found = this.unplayedFilteredList.map((obj) => obj.console).indexOf(consoleName);
+    removeFilterByConsoleButton: function(consoleName) {
+      let found = this.unplayedFilteredList.map((obj) => obj.consoleName).indexOf(consoleName);
       this.unplayedFilteredList.splice(found, 1);
       this.unplayedFilteredConsoleArray.splice(found, 1);
     },
     refreshConsoleListComponent: function(value) {
       this.$forceUpdate();
     },
-    filterButtonClick: function(event, consoleName, index, isSelected) {
-      console.log(event, consoleName, isSelected)
+    filterButtonClick: function(event, consoleName, colorStyle, index, isSelected) {
       if (isSelected) {
-        this.addFilterByConsoleButton(consoleName);
+        this.addFilterByConsoleButton(consoleName, colorStyle);
       } else {
-        this.removeFilterByConsoleButton(consoleName);
+        this.removeFilterByConsoleButton(consoleName, colorStyle);
       }
       this.$emit('Main:filterByConsole', event, this.unplayedFilteredConsoleArray);
     },
@@ -117,7 +134,6 @@ export default {
     }
   },
   created () {
-    console.log(this.unplayedConsoleList);
   },
   mounted () {
   }

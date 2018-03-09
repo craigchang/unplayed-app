@@ -41,7 +41,7 @@ export default {
   components: {
     UnplayedListItem
   },
-  props: ['listTitle', 'fileName', 'consoleList', 'colorList'],
+  props: ['listTitle', 'fileName', 'consoleList', 'consoleListTwo', 'colorList'],
   data () {
     return {
       listDescription: '',
@@ -63,6 +63,7 @@ export default {
       let listObj = [];
       let randomIndex = 0;
       let colorStyle = '';
+      let consoleSet = new Set();
 
       gamesLiElements.forEach((element) => {
         // get link
@@ -88,14 +89,42 @@ export default {
           comment = element.getElementsByTagName('span')[1].innerText;
 
         // apply unique color for each console
-        if (!this.consoleList[consoleName]) {
+        // if (!this.consoleList[consoleName]) {
+        //   randomIndex = Math.floor(Math.random() * this.colorList.length);
+        //   colorStyle = this.colorList[randomIndex];
+        //   this.consoleList[consoleName] = { 'count': 1, 'colorStyle': colorStyle };
+        //   //this.colorList.splice(randomIndex, 1);
+        // } else {
+        //   this.consoleList[consoleName].count++;
+        //   colorStyle = this.consoleList[consoleName].colorStyle;
+        // }
+
+        let ind = this.consoleListTwo.findIndex(obj => obj.consoleName == consoleName);
+
+        if ( ind === -1 ) {
           randomIndex = Math.floor(Math.random() * this.colorList.length);
           colorStyle = this.colorList[randomIndex];
           this.consoleList[consoleName] = { 'count': 1, 'colorStyle': colorStyle };
+
+          //colorStyle = this.colorList[randomIndex];
+          this.consoleListTwo.push({
+            consoleName,
+            'count': 1,
+            colorStyle,
+            'isSelected': false
+          });
           this.colorList.splice(randomIndex, 1);
         } else {
           this.consoleList[consoleName].count++;
           colorStyle = this.consoleList[consoleName].colorStyle;
+
+          let foundIndex = this.consoleListTwo.findIndex((obj) => {
+            return obj.consoleName == consoleName;
+          });
+          if (foundIndex !== -1) {
+            this.consoleListTwo[foundIndex].count++;
+            colorStyle = this.consoleListTwo[foundIndex].colorStyle;
+          }
         }
 
         listObj.push({

@@ -3,17 +3,17 @@
     <h1>{{listTitle}}</h1>
     <p>{{listDescription}}</p>
     <div class="form-group">
-      <input type="text" aria-describedby="searchByName" placeholder="Search by Name" class="form-control" v-model="searchByNameInput" style="padding: .375rem 1.25rem; font-size: 0.8125rem;">
+      <input type="text" aria-describedby="searchByName" placeholder="Search by Name" class="form-control search-by-name-input" v-model="searchByNameInput">
     </div>
     <div class="sort-by-container">
       <span>Sort by: </span>
       <div class="sort-by-criteria-container">
         <span>
-          <a class="sort-by-name-btn" href="#name" @click.prevent="sortByName">Name<span class="list-sort oi" :class="'oi-sort-' + [sortByNameClass]" :title="sortByNameClass"></span>
+          <a href="#name" @click.prevent="sortByName">Name<span :class="sortByNameClasses" :title="sortByNameClass"></span>
           </a>
         </span>
         <span>
-          <a class="sort-by-console-btn" href="#console" @click.prevent="sortByConsole">Console<span class="list-sort oi" :class="'oi-sort-' + [sortByConsoleClass]" :title="sortByConsoleClass"></span>
+          <a href="#console" @click.prevent="sortByConsole">Console<span :class="sortByConsoleClasses" :title="sortByConsoleClass"></span>
           </a>
         </span>
       </div>
@@ -21,10 +21,13 @@
     <ul class="list-group">
       <UnplayedListItem
         class="list-group-item list-group-item-action flex-column align-items-start"
-        v-for="(item, key) in filteredUnplayedList"
+        v-for="(obj, key) in filteredUnplayedList"
         :key="key"
-        :item="item"
-        :item-key="key"/>
+        :game-title="obj.gameTitle"
+        :link="obj.link"
+        :console-name="obj.consoleName"
+        :comment="obj.comment"
+        :color-style="obj.colorStyle"/>
     </ul>
   </div>
 </template>
@@ -34,22 +37,22 @@
 import showdown from 'showdown'
 import $ from 'jquery'
 import UnplayedListItem from '@/components/UnplayedListItem'
-import Utility from '@/helpers/utility'
+import UtilityComponent from '@/components/UtilityComponent'
 
 export default {
   name: 'UnplayedList',
+  extends: UtilityComponent,
   components: {
     UnplayedListItem
   },
-  props: ['listTitle', 'fileName', 'consoleList', 'consoleListTwo', 'colorList'],
+  props: ['listTitle', 'fileName', 'consoleList', 'colorList', 'filterByConsoleArray'],
   data () {
     return {
       listDescription: '',
       unplayedList: [],
       sortByConsoleClass: '',
       sortByNameClass: '',
-      searchByNameInput: '',
-      filterByConsoleArray: ''
+      searchByNameInput: ''
     }
   },
   methods: {
@@ -58,56 +61,44 @@ export default {
       html = html.replace(/\(/g, '<span>').replace(/\)/g, '</span>');
       return $.parseHTML(html);
     },
+    parseLink: function(element) {
+      if (element.getElementsByTagName('a').length > 0)
+        return element.getElementsByTagName('a')[0].getAttribute('href');
+      return '';
+    },
+    parseGameTitle: function(element) {
+      if (element.getElementsByTagName('a').length > 0)
+        return element.getElementsByTagName('a')[0].innerText;
+      else
+        return element.childNodes[0].textContent.trim(); // For now assume game title is always the first line
+    },
+    parseConsoleName: function(element) {
+      if (element.getElementsByTagName('span').length > 0)
+        return element.getElementsByTagName('span')[0].innerText;
+      return '';
+    },
+    parseComment: function(element) {
+      if (element.getElementsByTagName('span').length > 1)
+        return element.getElementsByTagName('span')[1].innerText;
+      return '';
+    },
     parseListUl: function(listUl) {
       let gamesLiElements = Array.from(listUl.getElementsByTagName('li'));
       let listObj = [];
       let randomIndex = 0;
       let colorStyle = '';
-      let consoleSet = new Set();
 
       gamesLiElements.forEach((element) => {
-        // get link
-        let link = '';
-        if (element.getElementsByTagName('a').length > 0)
-          link = element.getElementsByTagName('a')[0].getAttribute('href');
+        let link = this.parseLink(element);
+        let gameTitle = this.parseGameTitle(element);
+        let consoleName = this.parseConsoleName(element);
+        let comment = this.parseComment(element);
 
-        // get game title
-        let gameTitle = '';
-        if (element.getElementsByTagName('a').length > 0)
-          gameTitle = element.getElementsByTagName('a')[0].innerText;
-        else
-          gameTitle = element.childNodes[0].textContent.trim(); // For now assume game title is always the first line
-
-        // get console name
-        let consoleName = '';
-        if (element.getElementsByTagName('span').length > 0)
-          consoleName = element.getElementsByTagName('span')[0].innerText;
-
-        // get comment (if any)
-        let comment = '';
-        if (element.getElementsByTagName('span').length > 1)
-          comment = element.getElementsByTagName('span')[1].innerText;
-
-        // apply unique color for each console
-        // if (!this.consoleList[consoleName]) {
-        //   randomIndex = Math.floor(Math.random() * this.colorList.length);
-        //   colorStyle = this.colorList[randomIndex];
-        //   this.consoleList[consoleName] = { 'count': 1, 'colorStyle': colorStyle };
-        //   //this.colorList.splice(randomIndex, 1);
-        // } else {
-        //   this.consoleList[consoleName].count++;
-        //   colorStyle = this.consoleList[consoleName].colorStyle;
-        // }
-
-        let ind = this.consoleListTwo.findIndex(obj => obj.consoleName == consoleName);
-
-        if ( ind === -1 ) {
+        let foundConsoleIndex = this.consoleList.findIndex(obj => obj.consoleName == consoleName);
+        if ( foundConsoleIndex === -1 ) {
           randomIndex = Math.floor(Math.random() * this.colorList.length);
           colorStyle = this.colorList[randomIndex];
-          this.consoleList[consoleName] = { 'count': 1, 'colorStyle': colorStyle };
-
-          //colorStyle = this.colorList[randomIndex];
-          this.consoleListTwo.push({
+          this.consoleList.push({
             consoleName,
             'count': 1,
             colorStyle,
@@ -115,16 +106,8 @@ export default {
           });
           this.colorList.splice(randomIndex, 1);
         } else {
-          this.consoleList[consoleName].count++;
-          colorStyle = this.consoleList[consoleName].colorStyle;
-
-          let foundIndex = this.consoleListTwo.findIndex((obj) => {
-            return obj.consoleName == consoleName;
-          });
-          if (foundIndex !== -1) {
-            this.consoleListTwo[foundIndex].count++;
-            colorStyle = this.consoleListTwo[foundIndex].colorStyle;
-          }
+          this.consoleList[foundConsoleIndex].count++;
+          colorStyle = this.consoleList[foundConsoleIndex].colorStyle;
         }
 
         listObj.push({
@@ -142,27 +125,20 @@ export default {
       this.sortByNameClass = ''; // reset name
       if (this.sortByConsoleClass === '' || this.sortByConsoleClass === 'descending') {
         this.sortByConsoleClass = 'ascending';
-        Utility.sortAscByCategory('consoleName', this.unplayedList);
+        this.sortAscByCategory('consoleName', this.unplayedList);
       } else {
         this.sortByConsoleClass = 'descending';
-        Utility.sortDescByCategory('consoleName', this.unplayedList);
+        this.sortDescByCategory('consoleName', this.unplayedList);
       }
     },
     sortByName: function(event) {
       this.sortByConsoleClass = ''; // reset console
       if (this.sortByNameClass === '' || this.sortByNameClass === 'descending') {
         this.sortByNameClass = 'ascending';
-        Utility.sortAscByCategory('gameTitle', this.unplayedList);
+        this.sortAscByCategory('gameTitle', this.unplayedList);
       } else {
         this.sortByNameClass = 'descending';
-        Utility.sortDescByCategory('gameTitle', this.unplayedList);
-      }
-    },
-    search: function(nameKey, myArray) {
-      for (var i=0; i < myArray.length; i++) {
-        if (myArray[i].name === nameKey) {
-          return myArray[i];
-        }
+        this.sortDescByCategory('gameTitle', this.unplayedList);
       }
     }
   },
@@ -180,6 +156,20 @@ export default {
       });
 
       return filteredResults;
+    },
+    sortByNameClasses: function() {
+      return [
+        'sort-by-name-btn',
+        'list-sort oi',
+        'oi-sort-' + this.sortByNameClass
+      ];
+    },
+    sortByConsoleClasses: function() {
+      return [
+        'sort-by-console-btn',
+        'list-sort oi',
+        'oi-sort-' + this.sortByConsoleClass
+      ];
     }
   },
   created () {
@@ -201,17 +191,9 @@ export default {
           }
         }
 
-        this.$emit('refreshConsoleListComponent', this.listTitle)
       }).catch(e => {
         console.log(e);
       })
-
-    this.$parent.$on('Main:filterByConsole', (event, filteredConsoleArray) => {
-      this.filterByConsoleArray = filteredConsoleArray;
-    });
-    this.$parent.$on('Main:showAll', () => {
-      this.filterByConsoleArray = '';
-    });
   }
 }
 
@@ -233,6 +215,11 @@ p
 {
   padding-left: 1.25rem;
   margin: 0 0 16px;
+}
+
+input.search-by-name-input {
+  padding: .375rem 1.25rem; 
+  font-size: 0.8125rem;
 }
 
 span.list-sort {

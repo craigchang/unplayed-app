@@ -1,10 +1,10 @@
 <template>
   <li>
     <div class="d-flex justify-content-between align-items-center">
-      <a :href="item.link !== '' ? item.link : '#'">{{item.gameTitle}}</a>
-      <span class="badge badge-pill" :class="'badge-' + item.colorStyle">{{item.consoleName}}</span>
+      <a :href="itemLink">{{gameTitle}}</a>
+      <span class="badge badge-pill" :class="classes">{{consoleName}}</span>
     </div>
-    <small v-if="item.comment">{{item.comment}}</small>
+    <small v-if="comment">{{comment}}</small>
   </li>
 </template>
 
@@ -12,12 +12,15 @@
 /* eslint-disable */
 export default {
   name: 'UnplayedListItem',
-  data () {
-    return {}
-  },
-  created () {
-  },
-  props: ['item']
+  props: ['gameTitle', 'link', 'consoleName', 'comment', 'colorStyle'],
+  computed: {
+    classes: function() {
+      return ['badge-' + this.colorStyle];
+    },
+    itemLink: function() {
+      return this.link !== '' ? this.link : '#';
+    }
+  }
 }
 </script>
 

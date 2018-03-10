@@ -3,7 +3,7 @@
   <button
     type="button"
     :class="classes"
-    @click.stop="clickEvent($event, consoleName, colorStyle, index)">
+    @click.stop="$emit('filterButtonClick', $event, consoleName, colorStyle, index, !isSelected)">
     {{consoleName}}
     <span class="badge badge-light">{{count}}</span>
     <span class="sr-only">count</span>
@@ -15,18 +15,7 @@
 export default {
 /* eslint-disable */
   name: 'FilterButton',
-  data () { 
-    return {
-      isSelected: false
-    }
-  },
   props: ['consoleName', 'count', 'colorStyle', 'index', 'isSelected'],
-  methods: {
-    clickEvent: function(event, consoleName, colorStyle, index) {
-      this.isSelected = !this.isSelected;
-      this.$emit('filterButtonClick', event, consoleName, colorStyle, index, this.isSelected);
-    }
-  },
   computed: {
     classes: function() {
       return [
@@ -35,17 +24,6 @@ export default {
         'btn-' + this.colorStyle, 
         {selected: this.isSelected}
       ];
-    }
-  },
-  created () {
-    if (this.$parent) {
-      this.$parent.$on('Main:removeFilterByConsole', (consoleName) => {
-        if(this.consoleName === consoleName)
-          this.isSelected = false;
-      });
-      this.$parent.$on('Main:showAll', () => {
-        this.isSelected = false;
-      });
     }
   }
 }

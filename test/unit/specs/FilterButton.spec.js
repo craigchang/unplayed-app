@@ -1,13 +1,6 @@
 import Vue from 'vue'
+import { shallow } from 'vue-test-utils'
 import FilterButton from '@/components/FilterButton'
-
-describe('FilterButton.vue', () => {
-  it('should contain the correct data', () => {
-    const Constructor = Vue.extend(FilterButton)
-    const vm = new Constructor().$mount()
-    expect(vm.isSelected).toEqual(false)
-  })
-})
 
 describe('FilterButton.vue', () => {
   it('should contain the correct propsData', () => {
@@ -16,22 +9,35 @@ describe('FilterButton.vue', () => {
       propsData: {
         consoleName: 'PS4',
         count: 1,
-        colorStyle: 'unique'
+        colorStyle: 'unique',
+        index: 2,
+        isSelected: true
       }
     }).$mount()
     expect(vm.consoleName).toEqual('PS4')
     expect(vm.count).toEqual(1)
     expect(vm.colorStyle).toEqual('unique')
+    expect(vm.index).toEqual(2)
+    expect(vm.isSelected).toEqual(true)
   })
-})
 
-describe('FilterButton.vue', () => {
-  it('should run classes()', () => {
+  it('should contain the following click event', () => {
+    const wrapper = shallow(FilterButton);
+    const button = wrapper.find('button');
+    const spy = jest.fn();
+    wrapper.vm.$on('filterButtonClick', spy);
+
+    // action
+    button.trigger('click');
+
+    // result
+    expect(spy).toHaveBeenCalledTimes(1);
+  })
+
+
+  it('should run computed: classes()', () => {
     const Constructor = Vue.extend(FilterButton)
     const vm = new Constructor({
-      data: {
-        isSelected: true
-      },
       propsData: {
         isSelected: true,
         colorStyle: 'unique'

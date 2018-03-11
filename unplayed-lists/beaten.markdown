@@ -32,4 +32,5 @@ Finished the game, but not necessarily 100%
 - [Uncharted: The Nathan Drake Collection](http://www.metacritic.com/game/playstation-4/uncharted-the-nathan-drake-collection) (PS4)
 - [Uncharted 4: A Thief's End](http://www.metacritic.com/game/playstation-4/uncharted-4-a-thiefs-end) (PS4)
 - [Unravel](http://www.metacritic.com/game/playstation-4/unravel) (PS4)
+- [What Remains of Edith Finch](http://www.metacritic.com/game/playstation-4/what-remains-of-edith-finch) (PS4)
 - [Zero Escape: Virtue's Last Reward](http://www.metacritic.com/game/3ds/zero-escape-virtues-last-reward) (3DS)

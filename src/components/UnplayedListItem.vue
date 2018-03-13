@@ -2,7 +2,7 @@
   <li>
     <div class="d-flex justify-content-between align-items-center">
       <a :href="itemLink">{{gameTitle}}</a>
-      <span class="badge badge-pill" :class="classes">{{consoleName}}</span>
+      <span :class="classes">{{consoleName}}</span>
     </div>
     <small v-if="comment">{{comment}}</small>
   </li>
@@ -15,7 +15,11 @@ export default {
   props: ['gameTitle', 'link', 'consoleName', 'comment', 'colorStyle'],
   computed: {
     classes: function() {
-      return ['badge-' + this.colorStyle];
+      return [
+        'badge',
+        'badge-pill',
+        'badge-' + this.colorStyle
+      ];
     },
     itemLink: function() {
       return this.link !== '' ? this.link : '#';

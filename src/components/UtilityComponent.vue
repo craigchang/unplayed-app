@@ -1,6 +1,4 @@
-<template>
-</template>
-
+<template></template>
 <script>
 /* eslint-disable */
 export default {
@@ -8,10 +6,8 @@ export default {
   methods: {
     sortAscByCategory: (cat, list) => {
       list.sort((a, b) => {
-        let param1 = a[cat];
-        let param2 = b[cat];
-        if (typeof a[cat] == 'string') param1 = a[cat].toLowerCase();
-        if (typeof b[cat] == 'string') param2 = b[cat].toLowerCase();
+        let param1 = typeof a[cat] == 'string' ? a[cat].toLowerCase() : a[cat];
+        let param2 = typeof b[cat] == 'string' ? b[cat].toLowerCase() : b[cat];
         if (param1 < param2) return -1;
         else if (param1 > param2) return 1;
         else return 0;
@@ -21,10 +17,8 @@ export default {
     },
     sortDescByCategory: (cat, list) => {
       list.sort((a, b) => {
-        let param1 = a[cat];
-        let param2 = b[cat];
-        if (typeof a[cat] == 'string') param1 = a[cat].toLowerCase();
-        if (typeof b[cat] == 'string') param2 = b[cat].toLowerCase();
+        let param1 = typeof a[cat] == 'string' ? a[cat].toLowerCase() : a[cat];
+        let param2 = typeof b[cat] == 'string' ? b[cat].toLowerCase() : b[cat];
         if (param1 > param2) return -1;
         else if (param1 < param2) return 1;
         else return 0;
@@ -37,6 +31,4 @@ export default {
 };
 
 </script>
-
-<style scoped>
-</style>
+<style></style>

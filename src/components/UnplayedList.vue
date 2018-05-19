@@ -173,6 +173,7 @@ export default {
     }
   },
   created () {
+    console.log(this.fileName)
     fetch(this.fileName)
       .then(response => {
         if (!response.ok) {
@@ -205,20 +206,24 @@ export default {
 h1
 {
   margin: 0 0 16px;
-  padding: 1rem 0 1rem 1.25rem;
-  padding-left: 1.25rem;
+  padding: 0.5rem 0 0.5rem 0.750rem;
+  padding-left: 1rem;
   border-bottom: 4px solid #333;
-  font-size: 2rem;
+  font-size: 1.5rem;
+}
+
+p, span {
+  font-size: 0.75rem;
 }
 
 p
 {
-  padding-left: 1.25rem;
+  padding-left: 1rem;
   margin: 0 0 16px;
 }
 
 input.search-by-name-input {
-  padding: .375rem 1.25rem; 
+  padding: .375rem 1rem; 
   font-size: 0.8125rem;
 }
 
@@ -227,7 +232,7 @@ span.list-sort {
 }
 
 div.sort-by-container {
-  padding: 0 1.25rem;
+  padding: 0 1rem;
   margin-bottom: 0;
   margin: 0 0 10px;
   border-bottom: 1px solid #333;

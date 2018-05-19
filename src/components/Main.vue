@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="jumbotron">
-      <div style="margin: 0 auto; max-width: 1200px;">
-        <button @click="showAll" class="btn btn-primary">Show All</button>
+      <div>
+        <button @click="showAll" class="btn btn-primary btn-show-all">Show All</button>
         <FilterButton
           v-for="(obj, index) in unplayedConsoleList"
           :key="index"
@@ -15,19 +15,21 @@
         />
       </div>
     </div>
-    <div class="jumbotron" style="background-color: white;margin: 0 auto; max-width: 1200px;">
+
+    <div class="jumbotron" :style="unplayedFilteredList.length !== 0 ? 'margin-top:0.5rem;' : 'padding-top: 0rem;'">
       <button
         v-for="(consoleName, index) in unplayedFilteredList"
         type="button"
         :key="consoleName"
         :index="index"
+        :style="{'font-size': '.750rem'}"
         :class="' btn btn-' + findColorStyleByConsoleName(consoleName)"
         @click.stop="removeFilterByConsoleButton(consoleName, index, findIndexOnConsoleListByConsoleName(consoleName), false)">
           <span aria-hidden="true">&times;</span>
           {{consoleName}}
       </button>
     </div>
-    <div class="row">
+    <div class="row" style="margin-top: 1rem">
       <UnplayedList
         list-title="Unplayed"
         :file-name="unplayedFile"
@@ -119,12 +121,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+button.btn-show-all {
+  font-size: .750rem;
+}
+
 .jumbotron {
-  padding: 1rem;
+  padding: 0.5rem 0.5rem 0 0.5rem;
   margin-bottom: 0;
 }
 .jumbotron button {
-  margin-right: 1rem;
+  margin-right: 0.5rem;
   margin-bottom: 0.5rem;
 }
 .selected {

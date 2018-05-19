@@ -21,4 +21,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
+div, a {
+  font-size: 0.750rem;
+}
+
 </style>

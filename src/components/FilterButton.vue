@@ -32,8 +32,12 @@ export default {
 
 <style scoped>
 
+button {
+  font-size: .750rem;
+}
+
 button.selected {
-  border: 3px solid black;
+  /*border: 1px solid black;*/
 }
 
 </style>

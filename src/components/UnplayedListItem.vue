@@ -31,13 +31,24 @@ export default {
 <style scoped>
 /* bootstrap css */ 
 .badge {
-  font-size: 70%;
+  font-size: .625rem;
 }
 small {
   color: #999;
 }
 .list-group-item-action {
   color: #333;
+}
+
+/* scoped */
+a, span {
+  font-size: 0.750rem;
+}
+small {
+  font-size: 0.625rem;
+}
+.list-group-item-action {
+  padding: .5rem 1rem;
 }
 
 </style>

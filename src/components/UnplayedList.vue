@@ -2,9 +2,9 @@
   <div class="col-lg-3">
     <h1>{{listTitle}}</h1>
     <p>{{listDescription}}</p>
-    <div class="form-group">
+    <!-- <div class="form-group">
       <input type="text" aria-describedby="searchByName" placeholder="Search by Name" class="form-control search-by-name-input" v-model="searchByNameInput">
-    </div>
+    </div> -->
     <div class="sort-by-container">
       <span>Sort by: </span>
       <div class="sort-by-criteria-container">
@@ -45,7 +45,7 @@ export default {
   components: {
     UnplayedListItem
   },
-  props: ['listTitle', 'fileName', 'consoleList', 'colorList', 'filterByConsoleArray'],
+  props: ['listTitle', 'fileName', 'consoleList', 'colorList', 'filterByConsoleArray', 'searchByNameInput'],
   data () {
     return {
       listDescription: '',

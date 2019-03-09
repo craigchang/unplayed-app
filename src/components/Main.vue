@@ -29,27 +29,34 @@
           {{consoleName}}
       </button>
     </div>
+    <div class="form-group" style="margin-top:0.5rem">
+      <input type="text" aria-describedby="searchByName" placeholder="Search by Name" class="form-control search-by-name-input" v-model="searchByNameInput">
+    </div>
     <div class="row" style="margin-top: 1rem">
       <UnplayedList
         list-title="Unplayed"
+        :search-by-name-input="searchByNameInput"
         :file-name="unplayedFile"
         :console-list="unplayedConsoleList"
         :filter-by-console-array="unplayedFilteredList"
         :color-list="colorList"/>
       <UnplayedList
         list-title="Unbeaten"
+        :search-by-name-input="searchByNameInput"
         :file-name="unbeatenFile"
         :console-list="unplayedConsoleList"
         :filter-by-console-array="unplayedFilteredList"
         :color-list="colorList"/>
       <UnplayedList
         list-title="Beaten"
+        :search-by-name-input="searchByNameInput"
         :file-name="beatenFile"
         :console-list="unplayedConsoleList"
         :filter-by-console-array="unplayedFilteredList"
         :color-list="colorList"/>
       <UnplayedList
         list-title="Abandoned"
+        :search-by-name-input="searchByNameInput"
         :file-name="abandonedFile"
         :console-list="unplayedConsoleList"
         :filter-by-console-array="unplayedFilteredList"
@@ -81,7 +88,8 @@ export default {
       unplayedFile: unplayed_md,
       unbeatenFile: unbeaten_md,
       beatenFile: beaten_md,
-      abandonedFile: abandoned_md
+      abandonedFile: abandoned_md,
+      searchByNameInput: ''
     }
   },
   methods: {

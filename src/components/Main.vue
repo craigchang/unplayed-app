@@ -33,6 +33,18 @@
       <input type="text" aria-describedby="searchByName" placeholder="Search by Name" class="form-control search-by-name-input" v-model="searchByNameInput">
     </div>
     <div class="row" style="margin-top: 1rem">
+      <FullList
+        :file-name-unplayed="unplayedFile"
+        :file-name-unbeaten="unbeatenFile"
+        :file-name-beaten="beatenFile"
+        :file-name-abandonedFile="abandonedFile"
+        :search-by-name-input="searchByNameInput"
+        :console-list="unplayedConsoleList"
+        :filter-by-console-array="unplayedFilteredList"
+        :color-list="colorList"
+        />
+    </div>
+    <div class="row" style="margin-top: 1rem">
       <UnplayedList
         list-title="Unplayed"
         :search-by-name-input="searchByNameInput"
@@ -73,10 +85,12 @@ import beaten_md from '../../unplayed-lists/beaten.markdown'
 import abandoned_md from '../../unplayed-lists/abandoned.markdown'
 import UnplayedList from './UnplayedList'
 import FilterButton from './FilterButton'
+import FullList from './FullList'
 
 export default {
   name: 'Main',
   components: {
+    FullList,
     UnplayedList,
     FilterButton
   },

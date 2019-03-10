@@ -37,7 +37,7 @@
         :file-name-unplayed="unplayedFile"
         :file-name-unbeaten="unbeatenFile"
         :file-name-beaten="beatenFile"
-        :file-name-abandonedFile="abandonedFile"
+        :file-name-abandoned="abandonedFile"
         :search-by-name-input="searchByNameInput"
         :console-list="unplayedConsoleList"
         :filter-by-console-array="unplayedFilteredList"

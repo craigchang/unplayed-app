@@ -1,12 +1,13 @@
 <template>
 	<div class="col-lg-12">
-		<h1>The Full List</h1>
-    <!-- <div class="form-group">
-      <input type="text" aria-describedby="searchByName" placeholder="Search by Name" class="form-control search-by-name-input" v-model="searchByNameInput">
-    </div> -->
+		<h1>The Full List ({{filteredUnplayedList.length}})</h1>
     <div class="sort-by-container">
       <span>Sort by: </span>
       <div class="sort-by-criteria-container">
+      	<span>
+      		<a href="#category" @click.prevent="sortByCategory">Category<span :class="sortByCategorylasses" :title="sortByCategoryClass"></span>
+          </a>
+      	</span>
         <span>
           <a href="#name" @click.prevent="sortByName">Name<span :class="sortByNameClasses" :title="sortByNameClass"></span>
           </a>
@@ -25,6 +26,7 @@
         :game-title="obj.gameTitle"
         :link="obj.link"
         :console-name="obj.consoleName"
+        :category="obj.category"
         :comment="obj.comment"
         :color-style="obj.colorStyle"/>
     </ul>
@@ -90,7 +92,7 @@ export default {
         return element.getElementsByTagName('span')[1].innerText;
       return '';
     },
-    parseListUl: function(listUl) {
+    parseListUl: function(listUl, category) {
       let gamesLiElements = Array.from(listUl.getElementsByTagName('li'));
       let listObj = [];
       let randomIndex = 0;
@@ -122,6 +124,7 @@ export default {
           link,
           gameTitle,
           consoleName,
+          category,
           comment,
           colorStyle
         });
@@ -193,6 +196,13 @@ export default {
   		"abandonedFileRequest" : {}
   	}
 
+  	let categoryList = [
+  		'Unplayed',
+  		'Beaten',
+  		'Unbeaten',
+  		'Abandoned'
+  	]
+
   	Promise.all([
   		unplayedFileRequest, 
   		beatenFileRequest, 
@@ -207,9 +217,9 @@ export default {
   		let parsedHtmlArray = [];
   		for(let i = 0; i < 4; i++) {
   			parsedHtmlArray.push(this.convertMarkdownToHtmlDom(values[i]));
-  			for(var j = 0; j < parsedHtmlArray[i].length; j++) {
+  			for(let j = 0; j < parsedHtmlArray[i].length; j++) {
 	        if (parsedHtmlArray[i][j].tagName === 'UL') {
-	          this.unplayedList = this.unplayedList.concat( this.parseListUl(parsedHtmlArray[i][j]) );
+	          this.unplayedList = this.unplayedList.concat( this.parseListUl(parsedHtmlArray[i][j], categoryList[i]) );
 	        }
 	      }
   		}

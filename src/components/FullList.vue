@@ -1,13 +1,13 @@
 <template>
 	<div class="col-lg-12">
-		<h1>The Full List ({{filteredUnplayedList.length}})</h1>
+		<!-- <h1>The Full List ({{filteredUnplayedList.length}})</h1> -->
     <div class="sort-by-container">
       <span>Sort by: </span>
       <div class="sort-by-criteria-container">
-      	<span>
+<!--       	<span>
       		<a href="#category" @click.prevent="sortByCategory">Category<span :class="sortByCategorylasses" :title="sortByCategoryClass"></span>
           </a>
-      	</span>
+      	</span> -->
         <span>
           <a href="#name" @click.prevent="sortByName">Name<span :class="sortByNameClasses" :title="sortByNameClass"></span>
           </a>
@@ -223,6 +223,9 @@ export default {
 	        }
 	      }
   		}
+
+      this.sortAscByCategory('gameTitle', this.unplayedList);
+      
   		console.log(this.unplayedList)
 
   	})

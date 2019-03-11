@@ -8,7 +8,7 @@
           :key="index"
           :index="index"
           :color-style="obj.colorStyle"
-          :count="obj.count"
+          :count="obj.count/2"
           :console-name="obj.consoleName"
           :is-selected="obj.isSelected"
           @filterButtonClick="filterButtonClick"
@@ -32,47 +32,61 @@
     <div class="form-group" style="margin-top:0.5rem">
       <input type="text" aria-describedby="searchByName" placeholder="Search by Name" class="form-control search-by-name-input" v-model="searchByNameInput">
     </div>
-    <div class="row" style="margin-top: 1rem">
-      <FullList
-        :file-name-unplayed="unplayedFile"
-        :file-name-unbeaten="unbeatenFile"
-        :file-name-beaten="beatenFile"
-        :file-name-abandoned="abandonedFile"
-        :search-by-name-input="searchByNameInput"
-        :console-list="unplayedConsoleList"
-        :filter-by-console-array="unplayedFilteredList"
-        :color-list="colorList"
-        />
-    </div>
-    <div class="row" style="margin-top: 1rem">
-      <UnplayedList
-        list-title="Unplayed"
-        :search-by-name-input="searchByNameInput"
-        :file-name="unplayedFile"
-        :console-list="unplayedConsoleList"
-        :filter-by-console-array="unplayedFilteredList"
-        :color-list="colorList"/>
-      <UnplayedList
-        list-title="Unbeaten"
-        :search-by-name-input="searchByNameInput"
-        :file-name="unbeatenFile"
-        :console-list="unplayedConsoleList"
-        :filter-by-console-array="unplayedFilteredList"
-        :color-list="colorList"/>
-      <UnplayedList
-        list-title="Beaten"
-        :search-by-name-input="searchByNameInput"
-        :file-name="beatenFile"
-        :console-list="unplayedConsoleList"
-        :filter-by-console-array="unplayedFilteredList"
-        :color-list="colorList"/>
-      <UnplayedList
-        list-title="Abandoned"
-        :search-by-name-input="searchByNameInput"
-        :file-name="abandonedFile"
-        :console-list="unplayedConsoleList"
-        :filter-by-console-array="unplayedFilteredList"
-        :color-list="colorList"/>
+
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link" id="nav-full-tab" data-toggle="tab" href="#nav-full" role="tab" aria-controls="nav-full" aria-selected="true">Full List</a>
+        <a class="nav-item nav-link active" id="nav-split-tab" data-toggle="tab" href="#nav-split" role="tab" aria-controls="nav-split" aria-selected="false">Split List</a>
+      </div>
+    </nav>
+
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade" id="nav-full" role="tabpanel" aria-labelledby="nav-full-tab">
+        <div class="row" style="margin-top: 1rem">
+          <FullList
+            :file-name-unplayed="unplayedFile"
+            :file-name-unbeaten="unbeatenFile"
+            :file-name-beaten="beatenFile"
+            :file-name-abandoned="abandonedFile"
+            :search-by-name-input="searchByNameInput"
+            :console-list="unplayedConsoleList"
+            :filter-by-console-array="unplayedFilteredList"
+            :color-list="colorList"
+            />
+        </div>
+      </div>
+      <div class="tab-pane fade show active" id="nav-split" role="tabpanel" aria-labelledby="nav-split-tab">
+        <div class="row" style="margin-top: 1rem">
+          <UnplayedList
+            list-title="Unplayed"
+            :search-by-name-input="searchByNameInput"
+            :file-name="unplayedFile"
+            :console-list="unplayedConsoleList"
+            :filter-by-console-array="unplayedFilteredList"
+            :color-list="colorList"/>
+          <UnplayedList
+            list-title="Unbeaten"
+            :search-by-name-input="searchByNameInput"
+            :file-name="unbeatenFile"
+            :console-list="unplayedConsoleList"
+            :filter-by-console-array="unplayedFilteredList"
+            :color-list="colorList"/>
+          <UnplayedList
+            list-title="Beaten"
+            :search-by-name-input="searchByNameInput"
+            :file-name="beatenFile"
+            :console-list="unplayedConsoleList"
+            :filter-by-console-array="unplayedFilteredList"
+            :color-list="colorList"/>
+          <UnplayedList
+            list-title="Abandoned"
+            :search-by-name-input="searchByNameInput"
+            :file-name="abandonedFile"
+            :console-list="unplayedConsoleList"
+            :filter-by-console-array="unplayedFilteredList"
+            :color-list="colorList"/>
+        </div>
+      </div>
     </div>
   </div>
 </template>

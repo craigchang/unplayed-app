@@ -8,7 +8,7 @@
           :key="index"
           :index="index"
           :color-style="obj.colorStyle"
-          :count="obj.count/2"
+          :count="obj.count"
           :console-name="obj.consoleName"
           :is-selected="obj.isSelected"
           @filterButtonClick="filterButtonClick"

@@ -12,13 +12,20 @@
 /* eslint-disable */
 export default {
   name: 'UnplayedListItem',
-  props: ['gameTitle', 'link', 'consoleName', 'comment', 'colorStyle'],
+  props: ['gameTitle', 'link', 'consoleName', 'comment', 'colorStyle', 'consoleList'],
   computed: {
+    resolvedColorStyle: function() {
+      if (this.consoleList && this.consoleList.length > 0) {
+        const found = this.consoleList.find(c => c.consoleName === this.consoleName);
+        if (found) return found.colorStyle;
+      }
+      return this.colorStyle || 'secondary';
+    },
     classes: function() {
       return [
         'badge',
         'badge-pill',
-        'badge-' + this.colorStyle
+        'badge-' + this.resolvedColorStyle
       ];
     },
     itemLink: function() {

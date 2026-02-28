@@ -11,7 +11,8 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "bootstrap": "^4.0.0",
@@ -53,6 +54,7 @@
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.6",
     "friendly-errors-webpack-plugin": "^1.6.1",
+    "gh-pages": "^6.3.0",
     "html-webpack-plugin": "^2.30.1",
     "jest": "^22.0.4",
     "jest-serializer-vue": "^0.3.0",
@@ -90,5 +92,13 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "overrides": {
+    "ansi-html": "npm:ansi-html-community@0.0.8",
+    "ansi-regex": "5.0.1",
+    "agent-base": "6.0.2",
+    "trim-newlines": "4.0.2",
+    "minimist": "1.2.8",
+    "json5": "2.2.3"
+  }
 }

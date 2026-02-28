@@ -28,7 +28,8 @@
         :console-name="obj.consoleName"
         :category="obj.category"
         :comment="obj.comment"
-        :color-style="obj.colorStyle"/>
+        :color-style="obj.colorStyle"
+        :console-list="consoleList"/>
     </ul>
 	</div>
 </template>

@@ -27,7 +27,8 @@
         :link="obj.link"
         :console-name="obj.consoleName"
         :comment="obj.comment"
-        :color-style="obj.colorStyle"/>
+        :color-style="obj.colorStyle"
+        :console-list="consoleList"/>
     </ul>
   </div>
 </template>
@@ -125,7 +126,7 @@ export default {
             this.listDescription = parsedHtmlArray[i].outerText;
           }
           if (parsedHtmlArray[i].tagName === 'UL') {
-            this.unplayedList = this.parseListUl(parsedHtmlArray[i], this.consoleList);
+            this.unplayedList = this.parseListUl(parsedHtmlArray[i], this.consoleList, true);
           }
         }
 

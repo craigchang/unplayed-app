@@ -30,7 +30,7 @@ let MarkdownParserMixin = {
         return element.getElementsByTagName('span')[1].innerText;
       return '';
     },
-    parseListUl: function(listUl, consoleList) {
+    parseListUl: function(listUl, consoleList, readOnlyConsoleList = false) {
       let gamesLiElements = Array.from(listUl.getElementsByTagName('li'));
       let listObj = [];
       let randomIndex = 0;
@@ -44,17 +44,23 @@ let MarkdownParserMixin = {
 
         let foundConsoleIndex = consoleList.findIndex(obj => obj.consoleName == consoleName);
         if ( foundConsoleIndex === -1 ) {
-          randomIndex = Math.floor(Math.random() * this.colorList.length);
-          colorStyle = this.colorList[randomIndex];
-          consoleList.push({
-            consoleName,
-            'count': 1,
-            colorStyle,
-            'isSelected': false
-          });
-          this.colorList.splice(randomIndex, 1);
+          if (readOnlyConsoleList) {
+            colorStyle = this.colorList && this.colorList.length > 0 ? this.colorList[0] : 'secondary';
+          } else {
+            randomIndex = Math.floor(Math.random() * this.colorList.length);
+            colorStyle = this.colorList[randomIndex];
+            consoleList.push({
+              consoleName,
+              'count': 1,
+              colorStyle,
+              'isSelected': false
+            });
+            this.colorList.splice(randomIndex, 1);
+          }
         } else {
-          consoleList[foundConsoleIndex].count++;
+          if (!readOnlyConsoleList) {
+            consoleList[foundConsoleIndex].count++;
+          }
           colorStyle = consoleList[foundConsoleIndex].colorStyle;
         }
 

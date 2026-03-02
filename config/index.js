@@ -50,8 +50,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    //assetsPublicPath: '/unplayed/',
-    assetsPublicPath: '/',
+    assetsPublicPath: '/unplayed-app/',
 
     /**
      * Source Maps
